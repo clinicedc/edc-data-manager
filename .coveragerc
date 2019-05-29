@@ -1,0 +1,4 @@
+[run]
+include = edc_data_manager/*
+omit = edc_data_manager/tests/*,edc_data_manager/migrations/*
+branch = 1
