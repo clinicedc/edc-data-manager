@@ -1,18 +1,15 @@
+.pydevproject
+.project
+.settings/
+django_crypto_fields
+db.sqlite3
+.DS_Store
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-.pydevproject
-.project
-.settings
-test-*
-db.sqlite3
-etc/*
-getresults_dst/migrations/
-getresults_dst/testdata/
-getresults_dst/testdata/inbox/
-getresults_dst/testdata/outbox/
-getresults_dst/testdata/archive/
-getresults_dst/testdata/viral_load/
+*$py.class
+
 # C extensions
 *.so
 
@@ -30,6 +27,7 @@ lib64/
 parts/
 sdist/
 var/
+wheels/
 *.egg-info/
 .installed.cfg
 *.egg
@@ -52,7 +50,8 @@ htmlcov/
 .cache
 nosetests.xml
 coverage.xml
-*,cover
+*.cover
+.hypothesis/
 
 # Translations
 *.mo
@@ -60,9 +59,50 @@ coverage.xml
 
 # Django stuff:
 *.log
+local_settings.py
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
 
 # Sphinx documentation
 docs/_build/
 
 # PyBuilder
 target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# SageMath parsed files
+*.sage.py
+
+# dotenv
+.env
+
+# virtualenv
+.venv
+venv/
+ENV/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
