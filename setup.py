@@ -10,7 +10,7 @@ with open(join(dirname(__file__), 'README.rst')) as readme:
 with open(join(dirname(__file__), 'VERSION')) as f:
     VERSION = f.read()
 
-tests_require = ['edc_test_utils', 'coverage']
+tests_require = ['edc-test-utils', 'coverage']
 with open(join(dirname(abspath(__file__)), 'requirements.txt')) as f:
     for line in f:
         tests_require.append(line.strip())
@@ -31,7 +31,24 @@ setup(
     long_description=README,
     zip_safe=False,
     keywords='django base classes for identifiers',
-    install_requires=[],
+    install_requires=[
+        "django-audit-fields",
+        "edc-action-item",
+        "edc-appointment",
+        "edc-auth",
+        "edc-constants",
+        "edc-form-validators",
+        "edc-lab",
+        "edc-list-data",
+        "edc-metadata",
+        "edc-model",
+        "edc-model-admin",
+        "edc-permissions",
+        "edc-registration",
+        "edc-sites",
+        "edc-utils",
+        "edc-visit-schedule",
+    ],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
