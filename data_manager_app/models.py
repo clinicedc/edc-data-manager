@@ -1,6 +1,5 @@
 import uuid
 
-from datetime import date
 from django.db import models
 from django.db.models.deletion import CASCADE, PROTECT
 from edc_appointment.models import Appointment
@@ -19,6 +18,7 @@ from edc_sites.models import SiteModelMixin
 from edc_visit_schedule.model_mixins import OnScheduleModelMixin, OffScheduleModelMixin
 from edc_visit_tracking.model_mixins import CrfModelMixin, VisitModelMixin
 from edc_consent.field_mixins.identity_fields_mixin import IdentityFieldsMixin
+from edc_metadata.model_mixins.updates.updates_crf_metadata_model_mixin import UpdatesCrfMetadataModelMixin
 
 
 class BasicModel(SiteModelMixin, BaseUuidModel):
@@ -97,61 +97,46 @@ class SubjectRequisition(RequisitionModelMixin, BaseUuidModel):
     reason_not_drawn = models.CharField(max_length=25, null=True)
 
 
-class BaseCrfModel(SiteModelMixin, models.Model):
-
-    subject_identifier = models.CharField(max_length=25)
-
-    subject_visit = models.ForeignKey(SubjectVisit, on_delete=CASCADE)
+class BaseCrfModel(CrfModelMixin, SiteModelMixin, UpdatesCrfMetadataModelMixin,
+                   ReferenceModelMixin, models.Model):
 
     f1 = models.CharField(max_length=50, default=uuid.uuid4)
-
-    @property
-    def visit(self):
-        return getattr(self, self.visit_model_attr())
-
-    @classmethod
-    def visit_model_attr(cls):
-        return "subject_visit"
-
-    def save(self, *args, **kwargs):
-        self.subject_identifier = self.subject_visit.subject_identifier
-        super().save(*args, **kwargs)
 
     class Meta:
         abstract = True
 
 
-class CrfOne(BaseCrfModel, CrfModelMixin, BaseUuidModel):
+class CrfOne(BaseCrfModel, BaseUuidModel):
 
     f1 = models.CharField(max_length=50, null=True)
 
 
-class CrfTwo(BaseCrfModel, CrfModelMixin, BaseUuidModel):
+class CrfTwo(BaseCrfModel, BaseUuidModel):
 
     pass
 
 
-class CrfThree(BaseCrfModel, CrfModelMixin, BaseUuidModel):
+class CrfThree(BaseCrfModel, BaseUuidModel):
 
     pass
 
 
-class CrfFour(BaseCrfModel, CrfModelMixin, BaseUuidModel):
+class CrfFour(BaseCrfModel, BaseUuidModel):
 
     pass
 
 
-class CrfFive(BaseCrfModel, CrfModelMixin, BaseUuidModel):
+class CrfFive(BaseCrfModel, BaseUuidModel):
 
     pass
 
 
-class CrfSix(BaseCrfModel, CrfModelMixin, BaseUuidModel):
+class CrfSix(BaseCrfModel, BaseUuidModel):
 
     pass
 
 
-class CrfSeven(BaseCrfModel, CrfModelMixin, BaseUuidModel):
+class CrfSeven(BaseCrfModel, BaseUuidModel):
 
     pass
 
