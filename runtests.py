@@ -21,6 +21,7 @@ DEFAULT_SETTINGS = DefaultTestSettings(
     DATA_DICTIONARY_APP_LABELS=["data_manager_app"],
     SUBJECT_VISIT_MODEL="data_manager_app.subjectvisit",
     SUBJECT_REQUISITION_MODEL="data_manager_app.subjectrequisition",
+    CELERY_ENABLED=False,
     INSTALLED_APPS=[
         "django.contrib.admin",
         "django.contrib.auth",

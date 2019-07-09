@@ -48,6 +48,7 @@ setup(
         "edc-sites",
         "edc-utils",
         "edc-visit-schedule",
+        "celery",
     ],
     classifiers=[
         'Environment :: Web Environment',
