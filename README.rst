@@ -3,68 +3,114 @@
 edc-data-manager
 ----------------
 
-Data manager administrative models and classes
+Data manager administrative models and classes.
+
+``edc-data-manager`` adds models and functionality to the Edc that compliment the role of the clinical trial data manager. 
+The ``Data Query`` form guides the data manager in describing missing, incomplete or incorrect participant data. The ``Data Query`` 
+is then made available to research staff on the participant's dashboard and administrative pages. Additionally, the data manager
+can define ``Query Rules`` that scan the dataset for participant data that match the rule's criteria. For each match found,
+``edc-data-manager`` automatically creates a ``Data Query``.
+
+For automated queries, those created when a ``Query Rule`` is run, ``edc-data-manager`` will re-run a ``Query Rule`` upon updates 
+to the participant data. If the criteria is no longer met, the ``Data Query`` is automatically closed.
 
 
 User Roles
 ==========
 
-``edc_data_manager`` adds the ``DATA MANAGER`` and the ``DATA_QUERY`` user groups. Members of the ``DATA_QUERY`` group can respond to existing data queries; that is edit existing ``data query`` instances. Members of the ``DATA MANAGER`` group have full access to add/change/delete any ``data_query``.
+``edc_data_manager`` adds the ``DATA MANAGER`` and the ``DATA_QUERY`` user groups. 
+Members of the ``DATA_QUERY`` group can respond to existing data queries by completing  the "site response" section of the form. 
+They do not have permissions to change the criteria of the data query. Research staff responsible for submitting participant 
+data are typically given membership to the ``DATA_QUERY`` user group.
+
+
+Members of the ``DATA MANAGER`` user group can add/change/delete any ``Data Query`` form and ``Query Rule`` form. 
+Data managers, those who oversee data collection but do not submit data themselves, are typically members of the ``DATA MANAGER`` user group. 
 
 
 The Data Query Model
 ====================
-The central model of ``edc_data_manager`` is the ``Data Query`` model. Upon reviewing the state of a research subject's data,
-the data manager may decide to open a data query with the research staff. This is done by creating a new ``Data Query`` instance.
-The ``data query`` describes an issue for the attention of the research staff at the clinical site. A data query might be general, described
-by free text, or specific, indicating references to specific timepoints and form questions.
-
-On the data query form, ``edc_data_manager`` provides access to the complete data dictionary of target model and all timepoints in the data collection schedule.
-
+The central model of ``edc_data_manager`` is the ``Data Query`` model. A ``Data Query`` is either created manually by a data manager
+or automatically when a ``Query Rule`` is run. The ``data query`` describes an issue for the attention of the research staff. 
+A data query might be general, describing the issue with nothing more than a free text comment, or specific. To allow for a specific
+data query, the ``Query Rule`` form has questions where the data manager (or ``Query Rule``) can select the relevant timepoints, form questions,
+and timing.
 
 Data query status
 +++++++++++++++++
 
-A data manager, a member of the ``DATA_MANAGER`` group, creates a query. The ``data query`` model instance initially has a status of ``New``. 
+The ``Data Query`` status is split between two fields, one managed by the research staff and one by the data manager. Initially the 
+research staff status is set to ``New`` and the data manager's status is set to ``Open``.
 
-The research staff, members of the ``DATA_QUERY`` group, can:
+The available states of a ``Data Query`` are similar to those used on ticketing systems; namely, New, Open , Feedback, Resolved, Closed. 
+Only a data manager can close a data query.
+
+Members of the ``DATA_QUERY`` group can:
 
 * Open the query -- indicating they are working on the issue. (``Open``)
 * Request feedback -- indicating they need assistance from the data manager .(``Feedback``)
 * Resolve the query -- indicating the issue is resolved. (``Resolved``)
 
-This status field, managed by the research staff, is independent of the overall status of the query, which is managed by the data manager.
+This status field, managed by members of the ``DATA_QUERY`` group, is in a seperate section of the ``Data Query`` form.
 
-The data manager updates a seperate status field. He/She can:
+Members of the ``DATA_MANAGER`` have their own section on the form and can:
+
 * Resolve the query (but only if the site status is also ``Resolved``)
 * Resolve with an action plan
 
-The data manager can override the status set by the research staff. For example, the data manager may decide to re-open a query.
+Since data managers have full permissions to the form, they can override the status set by the research staff.
+
+Query Rules
+===========
+
+Query Rules define criteria to be used to scan the dataset for data problems. In a query rule you can define the following:
+
+* CRF model
+* Related requisition panel name (if applicable)
+* CRF questions
+* Timepoints (visits)
+* Timing (when to run the query, e.g. 48 hours after the visit report is submitted)
+* Priority
+* Research staff contact
+* Data manager contact
+
+As mentioned above, a ``Data Query`` can be automatically creayed by a ``Query Rule``. Simple ``Query Rules`` are defined using the ``Query Rule`` form. 
+``Query Rules`` are run by a "handler". The default handler is sufficient in most cases. If not, a custom handler can be written, registered with 
+``edc_data_manager``, and selected on the ``Query Rule`` form.
+
+When are Query Rules run?
++++++++++++++++++++++++++
+
+* Query rules can be run as an Admin action from the QueryRule Admin page;
+* A Query rule is run when a model is modified;
+* Query rules can be scheduled if ``django-celery`` is installed.
+
+Data Queries trigger action items
++++++++++++++++++++++++++++++++++
+
+When a data query is created, a supporting action item is also created. As with all action items, this means an "alert"
+shows on the participant dashboard and users can be notified by email and/or SMS. See ``edc_action_item``. 
 
 
-Using Query Rules to generate data queries
-==============================================
-Data queries can be automatically generated based on ``query rules`` configured in advance.
+QueryRuleHandler -- the default rule handler
+++++++++++++++++++++++++++++++++++++++++++++
 
+For each timepoint specified in the ``Query Rule``, the handler:
 
-The Query Rule model
-++++++++++++++++++++++++
-
-
-Default rule handlers
-+++++++++++++++++++++
-
-The default rule handler checks the value of each question at each timepoint in the `QueryRule`. A question represents a model field. If the model field value has been set, e.g. is not ``None``, the question is considered answered.
-
+* checks to see if the visit report has been submitted. If not, the rule is ignored. 
+* checks if the requisition has been completed (if a requisition panel is linked to the query rule). If the requisition has not been completed, a ``Data Query`` is created immediately.
+* gathers each value specified in the list of CRF form questions and calls ``inspect_model``.
+* if ``inspect_model`` returns False, the ``Data Query`` is created or re-opened.
+* if ``inspect_model`` returns True, no data query is created or the existing ``Data Query`` is resolved.
 
 Custom rule handlers
 ++++++++++++++++++++
 
-In many cases the default rule handler is too simplistic. If so, a custom rule handler can be written, registered with ``edc_data_manager`` and selected on the ``CrfQueryRule`` form.
-
-Custom rule handlers are classes placed in the ``data_manager.py`` at the root of any app. They subclass the default rule handler, ``ModelHandler`` and override the ``resolved`` method, returning either ``True`` or ``False``. 
-If ``resolved`` returns ``True``, the overall data query will be set to ``resolved``. If ``False``, an open query will remain open and a resolved query will be re-opened.
-
+The default rule handler, ``QueryRuleHandler``, already does a lot, but it cannot satisfy all cases. The default ``inspect_model`` method 
+does most of the form specific work of ``QueryRuleHandler``. In the default implementation of ``inspect_model``, a blank field value is
+considered invalid and ``inspect_model`` returns ``False``. This may be fine if the ``Query Rule`` is just looking for just a single field value
+but not for a combination of values. When looking for a combination of field values, a blank field value may be valid. In such cases 
+you can override the ``inspect_model`` method and specify the correct logic for the desired data condition.
 
 For example:
 
@@ -74,25 +120,25 @@ For example:
 
 	from ambition_subject.constants import AWAITING_RESULTS
 	from edc_constants.constants import NOT_DONE, YES, NO
-	from edc_data_manager.rule import ModelHandler
+	from edc_data_manager.handlers import QueryRuleHandler
 	from edc_data_manager.site_data_manager import site_data_manager
 
 
-	class LumbarPunctureHandlerQ13(ModelHandler):
+	class LumbarPunctureHandlerQ13(QueryRuleHandler):
 
 	    name = "lumbar_puncture_q13"
 	    display_name = "Lumbar Puncture (Q13, 15, 21, 23, 24)"
 	    model_name = "ambition_subject.lumbarpuncturecsf"
 
 	    @property
-	    def resolved(self):
+	    def inspect_model(self):
 	        """Lumbar Puncture/Cerebrospinal Fluid 13, 15, 21, 23, 24.
 	        """
-	        resolved = False
+	        valid = False
 	        if self.get_field_value("csf_culture") == AWAITING_RESULTS:
 	            pass
 	        elif self.get_field_value("csf_culture") == NOT_DONE:
-	            resolved = True
+	            valid = True
 	        elif self.get_field_value("csf_culture") == YES:
 	            if (self.get_field_value("other_csf_culture")
 	                    and self.get_field_value("csf_wbc_cell_count")
@@ -100,29 +146,64 @@ For example:
 	                    and self.get_field_value("csf_protein")
 	                    and (self.get_field_value("csf_cr_ag")
 	                         or self.get_field_value("india_ink"))):
-	                resolved = True
+	                valid = True
 	        elif self.get_field_value("csf_culture") == NO:
 	            if (self.get_field_value("csf_wbc_cell_count")
 	                    and self.get_field_value("csf_glucose")
 	                    and self.get_field_value("csf_protein")
 	                    and (self.get_field_value("csf_cr_ag")
 	                         or self.get_field_value("india_ink"))):
-	                resolved = True
-	        return resolved
+	                valid = True
+	        return valid
 
 	site_data_manager.register(LumbarPunctureHandlerQ13)	
 
-You write any valid python in the ``resolved`` method, but when accessing the model fields referred to in the CrfQueryRule, it is recommended to use the ``get_field_value`` method instead of directly accessing the model instance.
+Note the use of ``get_field_value`` method instead of directly accessing the model instance. This is not absolutely necessary but 
+avoids confusion by ensuring you only access fields defined in the ``Query Rule``.
 
+
+Registering custom rule handlers
+++++++++++++++++++++++++++++++++
+
+``edc_data_manager`` has a site registry that ``autodiscovers`` module ``data_manager.py`` in the root of each app in ``INSTALLED_APPS``.
+
+For example:
+
+.. code-block:: python
+
+	# data_manager.py
+
+	from edc_data_manager.handlers import QueryRuleHandler
+	from edc_data_manager.site_data_manager import site_data_manager
+
+
+	class MyCustomHandler(QueryRuleHandler):
+
+	    name = "my_custom_handler"
+	    display_name = "My Custom Handler"
+	    model_name = "my_app.somecrf"
+
+	    @property
+	    def inspect_model(self):
+	        
+	        valid = False
+	        
+	        if self.get_field_value("field_one") == 1:
+	            
+	        ... some more code that eventually sets valid to True
+
+	        return valid
+
+	site_data_manager.register(MyCustomHandler)	
 
 Updating query rules
 ++++++++++++++++++++
 
-Query rules can be triggered manually to run from the admin action under the CrfQueryRule admin page.
+Query rules can be triggered manually to run from the admin action under the `QueryRule` admin page.
 
-If ``celery`` is enabled, the ``update_crf_query_rules_task`` will try to send proccessing to the MQ.
+If ``celery`` is enabled, the ``update_query_rules_task`` will try to send proccessing to the MQ.
 
-See also ``update_crf_query_rules``, ``update_crf_query_rules_task``, ``update_crf_query_rules_action``.
+See also ``update_query_rules``, ``update_query_rules_task``, ``update_query_rules_action``.
 
 .. |pypi| image:: https://img.shields.io/pypi/v/edc-data-manager.svg
     :target: https://pypi.python.org/pypi/edc-data-manager
