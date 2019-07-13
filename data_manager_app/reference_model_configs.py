@@ -32,10 +32,5 @@ def register_to_site_reference_configs():
         name="data_manager_app.CrfSeven", fields=["f1"])
     site_reference_configs.register(reference)
 
-    reference = ReferenceModelConfig(
-        name="data_manager_app.CrfMissingManager", fields=["f1"]
-    )
-    site_reference_configs.register(reference)
-
 
 register_to_site_reference_configs()
