@@ -42,19 +42,19 @@ The data manager updates a seperate status field. He/She can:
 The data manager can override the status set by the research staff. For example, the data manager may decide to re-open a query.
 
 
-Using Crf Query Rules to generate data queries
+Using Query Rules to generate data queries
 ==============================================
-Data queries can be automatically generated based on ``CRF query rules`` configured in advance.
+Data queries can be automatically generated based on ``query rules`` configured in advance.
 
 
-The Crf Query Rule model
+The Query Rule model
 ++++++++++++++++++++++++
 
 
 Default rule handlers
 +++++++++++++++++++++
 
-The default rule handler checks the value of each question at each timepoint in the CrfQueryRule. A question represents a model field. If the model field value has been set, e.g. is not ``None``, the question is considered answered.
+The default rule handler checks the value of each question at each timepoint in the `QueryRule`. A question represents a model field. If the model field value has been set, e.g. is not ``None``, the question is considered answered.
 
 
 Custom rule handlers
