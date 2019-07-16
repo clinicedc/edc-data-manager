@@ -196,6 +196,17 @@ For example:
 
 	site_data_manager.register(MyCustomHandler)	
 
+Dumping and loading a QueryRule fixture
+++++++++++++++++++++++++++++++++++++++++++
+
+.. code-block:: bash
+
+	python manage.py dumpdata edc_data_manager.queryrule --natural-foreign --natural-primary --indent 4 -o queryrule.json
+
+.. code-block:: bash
+
+	python manage.py loaddata queryrules.json
+
 Updating query rules
 ++++++++++++++++++++
 
