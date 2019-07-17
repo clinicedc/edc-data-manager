@@ -39,9 +39,10 @@ crfs2 = FormsCollection(
 
 
 crfs_unscheduled = FormsCollection(
-    Crf(show_order=1, model=f"{app_label}.crftwo", required=True),
-    Crf(show_order=2, model=f"{app_label}.crfthree", required=True),
-    Crf(show_order=3, model=f"{app_label}.crffive", required=True),
+    Crf(show_order=1, model=f"{app_label}.crfone", required=True),
+    Crf(show_order=2, model=f"{app_label}.crftwo", required=True),
+    Crf(show_order=3, model=f"{app_label}.crfthree", required=True),
+    Crf(show_order=4, model=f"{app_label}.crffive", required=True),
 )
 
 requisitions = FormsCollection(
