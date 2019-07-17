@@ -22,6 +22,7 @@ DEFAULT_SETTINGS = DefaultTestSettings(
     SUBJECT_VISIT_MODEL="data_manager_app.subjectvisit",
     SUBJECT_REQUISITION_MODEL="data_manager_app.subjectrequisition",
     CELERY_ENABLED=False,
+    DATA_MANAGER_ENABLED=True,
     INSTALLED_APPS=[
         "django.contrib.admin",
         "django.contrib.auth",
