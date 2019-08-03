@@ -8,6 +8,7 @@ from .views import (
     SubjectListboardView,
     SubjectReviewListboardView,
 )
+from edc_data_manager.admin_site import edc_data_manager_admin
 
 app_name = "data_manager_app"
 
@@ -20,6 +21,7 @@ urlpatterns += SubjectListboardView.urls(
 
 urlpatterns += [
     path("admin/", admin.site.urls),
+    path("admin/", edc_data_manager_admin.urls),
     path("admin/", data_manager_app_admin.urls),
     path("", HomeView.as_view(), name="home_url"),
     path("", HomeView.as_view(), name="administration_url"),

@@ -23,6 +23,7 @@ DEFAULT_SETTINGS = DefaultTestSettings(
     SUBJECT_REQUISITION_MODEL="data_manager_app.subjectrequisition",
     CELERY_ENABLED=False,
     DATA_MANAGER_ENABLED=True,
+    EDC_NAVBAR_WARN_ONLY=True,
     INSTALLED_APPS=[
         "django.contrib.admin",
         "django.contrib.auth",
@@ -37,12 +38,17 @@ DEFAULT_SETTINGS = DefaultTestSettings(
         "edc_auth.apps.AppConfig",
         "edc_consent.apps.AppConfig",
         "edc_dashboard.apps.AppConfig",
+        "edc_lab_dashboard.apps.AppConfig",
         "edc_device.apps.AppConfig",
         "edc_identifier.apps.AppConfig",
         "edc_lab.apps.AppConfig",
+        "edc_locator.apps.AppConfig",
+        "edc_navbar.apps.AppConfig",
         "edc_metadata_rules.apps.AppConfig",
+        "edc_model_admin.apps.AppConfig",
         "edc_notification.apps.AppConfig",
         "edc_protocol.apps.AppConfig",
+        "edc_permissions.apps.AppConfig",
         "edc_reference.apps.AppConfig",
         "edc_registration.apps.AppConfig",
         "edc_subject_dashboard.apps.AppConfig",
@@ -56,6 +62,8 @@ DEFAULT_SETTINGS = DefaultTestSettings(
         "data_manager_app.apps.AppConfig",
     ],
     add_dashboard_middleware=True,
+    use_test_urls=True,
+    add_lab_dashboard_middleware=True,
 ).settings
 
 
