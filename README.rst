@@ -212,9 +212,9 @@ Updating query rules
 
 Query rules can be triggered manually to run from the admin action under the `QueryRule` admin page.
 
-If ``celery`` is enabled, the ``update_query_rules_task`` will try to send proccessing to the MQ.
+If ``celery`` is enabled, the ``update_query_rules`` will try to send proccessing to the MQ.
 
-See also ``update_query_rules``, ``update_query_rules_task``, ``update_query_rules_action``.
+See also ``update_query_rules``, ``update_query_rules_action``.
 
 .. |pypi| image:: https://img.shields.io/pypi/v/edc-data-manager.svg
     :target: https://pypi.python.org/pypi/edc-data-manager
