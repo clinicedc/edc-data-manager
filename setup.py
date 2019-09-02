@@ -49,7 +49,6 @@ setup(
         "edc-utils",
         "edc-visit-schedule",
         "celery",
-        "librabbitmq",
     ],
     classifiers=[
         'Environment :: Web Environment',
