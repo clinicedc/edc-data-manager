@@ -19,7 +19,7 @@ from edc_registration.model_mixins import UpdatesOrCreatesRegistrationModelMixin
 from edc_sites.models import SiteModelMixin
 from edc_visit_schedule.model_mixins import OnScheduleModelMixin, OffScheduleModelMixin
 from edc_visit_tracking.model_mixins import CrfModelMixin, VisitModelMixin
-from edc_identifier.model_mixins.subject_identifier_model_mixins import NonUniqueSubjectIdentifierFieldMixin
+from edc_model.models.historical_records import HistoricalRecords
 
 
 class BasicModel(SiteModelMixin, BaseUuidModel):
@@ -67,6 +67,8 @@ class SubjectConsent(
 ):
 
     objects = SubjectIdentifierManager()
+
+    history = HistoricalRecords()
 
     def natural_key(self):
         return (self.subject_identifier,)
