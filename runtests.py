@@ -55,7 +55,6 @@ DEFAULT_SETTINGS = DefaultTestSettings(
         "edc_notification.apps.AppConfig",
         "edc_offstudy.apps.AppConfig",
         "edc_protocol.apps.AppConfig",
-        "edc_permissions.apps.AppConfig",
         "edc_randomization.apps.AppConfig",
         "edc_reference.apps.AppConfig",
         "edc_pharmacy.apps.AppConfig",
