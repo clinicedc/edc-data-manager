@@ -43,7 +43,6 @@ setup(
         "edc-metadata",
         "edc-model",
         "edc-model-admin",
-        "edc-permissions",
         "edc-registration",
         "edc-sites",
         "edc-utils",
