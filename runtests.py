@@ -6,6 +6,7 @@ import sys
 
 from django.conf import settings
 from django.test.runner import DiscoverRunner
+from edc_constants.constants import IGNORE
 from edc_test_utils import DefaultTestSettings
 from os.path import abspath, dirname
 
@@ -26,7 +27,7 @@ DEFAULT_SETTINGS = DefaultTestSettings(
     ADVERSE_EVENT_APP_LABEL="adverse_event_app",
     CELERY_ENABLED=False,
     DATA_MANAGER_ENABLED=True,
-    EDC_NAVBAR_WARN_ONLY=True,
+    EDC_NAVBAR_VERIFY_ON_LOAD=IGNORE,
     INSTALLED_APPS=[
         "django.contrib.admin",
         "django.contrib.auth",
