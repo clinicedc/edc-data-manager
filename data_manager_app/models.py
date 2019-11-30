@@ -74,6 +74,24 @@ class SubjectConsent(
         return (self.subject_identifier,)
 
 
+class SubjectReconsent(
+    ConsentModelMixin,
+    PersonalFieldsMixin,
+    IdentityFieldsMixin,
+    UniqueSubjectIdentifierFieldMixin,
+    UpdatesOrCreatesRegistrationModelMixin,
+    SiteModelMixin,
+    BaseUuidModel,
+):
+
+    objects = SubjectIdentifierManager()
+
+    history = HistoricalRecords()
+
+    def natural_key(self):
+        return (self.subject_identifier,)
+
+
 class SubjectVisit(
     VisitModelMixin,
     ReferenceModelMixin,
