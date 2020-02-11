@@ -5,5 +5,5 @@ edc-dashboard
 edc-subject-dashboard
 edc-lab-dashboard
 edc-review-dashboard
-model_mommy
+model_bakery
 faker
