@@ -18,7 +18,7 @@ from edc_reference.model_mixins import ReferenceModelMixin
 from edc_registration.model_mixins import UpdatesOrCreatesRegistrationModelMixin
 from edc_sites.models import SiteModelMixin
 from edc_visit_schedule.model_mixins import OnScheduleModelMixin, OffScheduleModelMixin
-from edc_visit_tracking.model_mixins import CrfModelMixin, VisitModelMixin
+from edc_visit_tracking.model_mixins import VisitTrackingCrfModelMixin, VisitModelMixin
 from edc_model.models.historical_records import HistoricalRecords
 
 
@@ -118,7 +118,7 @@ class SubjectRequisition(RequisitionModelMixin, BaseUuidModel):
     reason_not_drawn = models.CharField(max_length=25, null=True)
 
 
-class BaseCrfModel(CrfModelMixin, SiteModelMixin,
+class BaseCrfModel(VisitTrackingCrfModelMixin, SiteModelMixin,
                    UpdatesCrfMetadataModelMixin,
                    ReferenceModelMixin, models.Model):
 
