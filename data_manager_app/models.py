@@ -118,9 +118,13 @@ class SubjectRequisition(RequisitionModelMixin, BaseUuidModel):
     reason_not_drawn = models.CharField(max_length=25, null=True)
 
 
-class BaseCrfModel(VisitTrackingCrfModelMixin, SiteModelMixin,
-                   UpdatesCrfMetadataModelMixin,
-                   ReferenceModelMixin, models.Model):
+class BaseCrfModel(
+    VisitTrackingCrfModelMixin,
+    SiteModelMixin,
+    UpdatesCrfMetadataModelMixin,
+    ReferenceModelMixin,
+    models.Model,
+):
 
     f1 = models.CharField(max_length=50, default=uuid.uuid4)
 
