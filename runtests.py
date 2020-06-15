@@ -10,7 +10,7 @@ from edc_constants.constants import IGNORE
 from edc_test_utils import DefaultTestSettings
 from os.path import abspath, dirname
 
-app_name = 'edc_data_manager'
+app_name = "edc_data_manager"
 base_dir = dirname(abspath(__file__))
 
 DEFAULT_SETTINGS = DefaultTestSettings(
@@ -44,6 +44,7 @@ DEFAULT_SETTINGS = DefaultTestSettings(
         "adverse_event_app.apps.AppConfig",
         "edc_auth.apps.AppConfig",
         "edc_consent.apps.AppConfig",
+        "edc_crf.apps.AppConfig",
         "edc_dashboard.apps.AppConfig",
         "edc_export.apps.AppConfig",
         "edc_lab_dashboard.apps.AppConfig",
@@ -84,9 +85,10 @@ def main():
     if not settings.configured:
         settings.configure(**DEFAULT_SETTINGS)
     django.setup()
-    tags = [t.split('=')[1] for t in sys.argv if t.startswith('--tag')]
+    tags = [t.split("=")[1] for t in sys.argv if t.startswith("--tag")]
     failures = DiscoverRunner(failfast=False, tags=tags).run_tests(
-        [f'{app_name}.tests'])
+        [f"{app_name}.tests"]
+    )
     sys.exit(failures)
 
 
