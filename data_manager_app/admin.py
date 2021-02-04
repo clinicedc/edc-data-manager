@@ -9,14 +9,14 @@ from .models import (
     CrfFive,
     CrfFour,
     CrfOne,
+    CrfSix,
     CrfThree,
     CrfTwo,
-    CrfSix,
+    OffSchedule,
+    OnSchedule,
     SubjectConsent,
     SubjectRequisition,
     SubjectVisit,
-    OnSchedule,
-    OffSchedule,
 )
 
 

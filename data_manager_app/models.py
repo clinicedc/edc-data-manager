@@ -13,13 +13,13 @@ from edc_lab.model_mixins import RequisitionModelMixin
 from edc_metadata.model_mixins.creates import CreatesMetadataModelMixin
 from edc_metadata.model_mixins.updates import UpdatesCrfMetadataModelMixin
 from edc_model.models import BaseUuidModel
+from edc_model.models.historical_records import HistoricalRecords
 from edc_offstudy.model_mixins import OffstudyModelMixin
 from edc_reference.model_mixins import ReferenceModelMixin
 from edc_registration.model_mixins import UpdatesOrCreatesRegistrationModelMixin
 from edc_sites.models import SiteModelMixin
-from edc_visit_schedule.model_mixins import OnScheduleModelMixin, OffScheduleModelMixin
-from edc_visit_tracking.model_mixins import VisitTrackingCrfModelMixin, VisitModelMixin
-from edc_model.models.historical_records import HistoricalRecords
+from edc_visit_schedule.model_mixins import OffScheduleModelMixin, OnScheduleModelMixin
+from edc_visit_tracking.model_mixins import VisitModelMixin, VisitTrackingCrfModelMixin
 
 
 class BasicModel(SiteModelMixin, BaseUuidModel):
