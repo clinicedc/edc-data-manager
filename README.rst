@@ -1,37 +1,37 @@
-|pypi| |travis| |codecov| |downloads|
+|pypi| |actions| |codecov| |downloads|
 
 edc-data-manager
 ----------------
 
 Data manager administrative models and classes.
 
-``edc-data-manager`` adds models and functionality to the Edc that compliment the role of the clinical trial data manager. 
-The ``Data Query`` form guides the data manager in describing missing, incomplete or incorrect participant data. The ``Data Query`` 
+``edc-data-manager`` adds models and functionality to the Edc that compliment the role of the clinical trial data manager.
+The ``Data Query`` form guides the data manager in describing missing, incomplete or incorrect participant data. The ``Data Query``
 is then made available to research staff on the participant's dashboard and administrative pages. Additionally, the data manager
 can define ``Query Rules`` that scan the dataset for participant data that match the rule's criteria. For each match found,
 ``edc-data-manager`` automatically creates a ``Data Query``.
 
-For automated queries, those created when a ``Query Rule`` is run, ``edc-data-manager`` will re-run a ``Query Rule`` upon updates 
+For automated queries, those created when a ``Query Rule`` is run, ``edc-data-manager`` will re-run a ``Query Rule`` upon updates
 to the participant data. If the criteria is no longer met, the ``Data Query`` is automatically closed.
 
 
 User Roles
 ==========
 
-``edc_data_manager`` adds the ``DATA MANAGER`` and the ``DATA_QUERY`` user groups. 
-Members of the ``DATA_QUERY`` group can respond to existing data queries by completing  the "site response" section of the form. 
-They do not have permissions to change the criteria of the data query. Research staff responsible for submitting participant 
+``edc_data_manager`` adds the ``DATA MANAGER`` and the ``DATA_QUERY`` user groups.
+Members of the ``DATA_QUERY`` group can respond to existing data queries by completing  the "site response" section of the form.
+They do not have permissions to change the criteria of the data query. Research staff responsible for submitting participant
 data are typically given membership to the ``DATA_QUERY`` user group.
 
 
-Members of the ``DATA MANAGER`` user group can add/change/delete any ``Data Query`` form and ``Query Rule`` form. 
-Data managers, those who oversee data collection but do not submit data themselves, are typically members of the ``DATA MANAGER`` user group. 
+Members of the ``DATA MANAGER`` user group can add/change/delete any ``Data Query`` form and ``Query Rule`` form.
+Data managers, those who oversee data collection but do not submit data themselves, are typically members of the ``DATA MANAGER`` user group.
 
 
 The Data Query Model
 ====================
 The central model of ``edc_data_manager`` is the ``Data Query`` model. A ``Data Query`` is either created manually by a data manager
-or automatically when a ``Query Rule`` is run. The ``data query`` describes an issue for the attention of the research staff. 
+or automatically when a ``Query Rule`` is run. The ``data query`` describes an issue for the attention of the research staff.
 A data query might be general, describing the issue with nothing more than a free text comment, or specific. To allow for a specific
 data query, the ``Query Rule`` form has questions where the data manager (or ``Query Rule``) can select the relevant timepoints, form questions,
 and timing.
@@ -39,10 +39,10 @@ and timing.
 Data query status
 +++++++++++++++++
 
-The ``Data Query`` status is split between two fields, one managed by the research staff and one by the data manager. Initially the 
+The ``Data Query`` status is split between two fields, one managed by the research staff and one by the data manager. Initially the
 research staff status is set to ``New`` and the data manager's status is set to ``Open``.
 
-The available states of a ``Data Query`` are similar to those used on ticketing systems; namely, New, Open , Feedback, Resolved, Closed. 
+The available states of a ``Data Query`` are similar to those used on ticketing systems; namely, New, Open , Feedback, Resolved, Closed.
 Only a data manager can close a data query.
 
 Members of the ``DATA_QUERY`` group can:
@@ -74,8 +74,8 @@ Query Rules define criteria to be used to scan the dataset for data problems. In
 * Research staff contact
 * Data manager contact
 
-As mentioned above, a ``Data Query`` can be automatically creayed by a ``Query Rule``. Simple ``Query Rules`` are defined using the ``Query Rule`` form. 
-``Query Rules`` are run by a "handler". The default handler is sufficient in most cases. If not, a custom handler can be written, registered with 
+As mentioned above, a ``Data Query`` can be automatically creayed by a ``Query Rule``. Simple ``Query Rules`` are defined using the ``Query Rule`` form.
+``Query Rules`` are run by a "handler". The default handler is sufficient in most cases. If not, a custom handler can be written, registered with
 ``edc_data_manager``, and selected on the ``Query Rule`` form.
 
 When are Query Rules run?
@@ -89,7 +89,7 @@ Data Queries trigger action items
 +++++++++++++++++++++++++++++++++
 
 When a data query is created, a supporting action item is also created. As with all action items, this means an "alert"
-shows on the participant dashboard and users can be notified by email and/or SMS. See ``edc_action_item``. 
+shows on the participant dashboard and users can be notified by email and/or SMS. See ``edc_action_item``.
 
 
 QueryRuleHandler -- the default rule handler
@@ -97,7 +97,7 @@ QueryRuleHandler -- the default rule handler
 
 For each timepoint specified in the ``Query Rule``, the handler:
 
-* checks to see if the visit report has been submitted. If not, the rule is ignored. 
+* checks to see if the visit report has been submitted. If not, the rule is ignored.
 * checks if the requisition has been completed (if a requisition panel is linked to the query rule). If the requisition has not been completed, a ``Data Query`` is created immediately.
 * gathers each value specified in the list of CRF form questions and calls ``inspect_model``.
 * if ``inspect_model`` returns False, the ``Data Query`` is created or re-opened.
@@ -106,10 +106,10 @@ For each timepoint specified in the ``Query Rule``, the handler:
 Custom rule handlers
 ++++++++++++++++++++
 
-The default rule handler, ``QueryRuleHandler``, already does a lot, but it cannot satisfy all cases. The default ``inspect_model`` method 
+The default rule handler, ``QueryRuleHandler``, already does a lot, but it cannot satisfy all cases. The default ``inspect_model`` method
 does most of the form specific work of ``QueryRuleHandler``. In the default implementation of ``inspect_model``, a blank field value is
 considered invalid and ``inspect_model`` returns ``False``. This may be fine if the ``Query Rule`` is just looking for just a single field value
-but not for a combination of values. When looking for a combination of field values, a blank field value may be valid. In such cases 
+but not for a combination of values. When looking for a combination of field values, a blank field value may be valid. In such cases
 you can override the ``inspect_model`` method and specify the correct logic for the desired data condition.
 
 For example:
@@ -156,9 +156,9 @@ For example:
 	                valid = True
 	        return valid
 
-	site_data_manager.register(LumbarPunctureHandlerQ13)	
+	site_data_manager.register(LumbarPunctureHandlerQ13)
 
-Note the use of ``get_field_value`` method instead of directly accessing the model instance. This is not absolutely necessary but 
+Note the use of ``get_field_value`` method instead of directly accessing the model instance. This is not absolutely necessary but
 avoids confusion by ensuring you only access fields defined in the ``Query Rule``.
 
 
@@ -185,16 +185,16 @@ For example:
 
 	    @property
 	    def inspect_model(self):
-	        
+
 	        valid = False
-	        
+
 	        if self.get_field_value("field_one") == 1:
-	            
+
 	        ... some more code that eventually sets valid to True
 
 	        return valid
 
-	site_data_manager.register(MyCustomHandler)	
+	site_data_manager.register(MyCustomHandler)
 
 Dumping and loading a QueryRule fixture
 ++++++++++++++++++++++++++++++++++++++++++
@@ -218,10 +218,10 @@ See also ``update_query_rules``, ``update_query_rules_action``.
 
 .. |pypi| image:: https://img.shields.io/pypi/v/edc-data-manager.svg
     :target: https://pypi.python.org/pypi/edc-data-manager
-    
-.. |travis| image:: https://travis-ci.com/clinicedc/edc-data-manager.svg?branch=develop
-    :target: https://travis-ci.com/clinicedc/edc-data-manager
-    
+
+.. |actions| image:: https://github.com/clinicedc/edc-data-manager/workflows/build/badge.svg?branch=develop
+  :target: https://github.com/clinicedc/edc-data-manager/actions?query=workflow:build
+
 .. |codecov| image:: https://codecov.io/gh/clinicedc/edc-data-manager/branch/develop/graph/badge.svg
   :target: https://codecov.io/gh/clinicedc/edc-data-manager
 
