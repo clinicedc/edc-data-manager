@@ -1,12 +1,5 @@
-from django.contrib.admin import AdminSite
+from edc_model_admin.admin_site import EdcAdminSite
 
+from .apps import AppConfig
 
-class DashboardAppAdminSite(AdminSite):
-    site_header = "DashboardApp"
-    site_title = "DashboardApp"
-    index_title = "DashboardApp Administration"
-    site_url = "/administration/"
-
-
-data_manager_app_admin = DashboardAppAdminSite(name="data_manager_app_admin")
-# data_manager_app_admin.disable_action("delete")
+data_manager_app_admin = EdcAdminSite(name="data_manager_app_admin", app_label=AppConfig.name)
