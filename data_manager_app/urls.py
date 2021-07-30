@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-
-from edc_data_manager.admin_site import edc_data_manager_admin
+from edc_utils.paths_for_urlpatterns import paths_for_urlpatterns
 
 from .admin_site import data_manager_app_admin
 from .views import (
@@ -18,9 +17,9 @@ urlpatterns += SubjectDashboardView.urls(app_name, label="subject_dashboard")
 urlpatterns += SubjectListboardView.urls(app_name, label="subject_dashboard")
 
 urlpatterns += [
-    path("admin/", edc_data_manager_admin.urls),
-    path("admin/", data_manager_app_admin.urls),
-    path("admin/", admin.site.urls),
+    *paths_for_urlpatterns("edc_data_manager"),
+    path("data_manager_app/admin/", data_manager_app_admin.urls),
+    path("/admin/", admin.site.urls),
     path("", HomeView.as_view(), name="home_url"),
     path("", HomeView.as_view(), name="administration_url"),
 ]
