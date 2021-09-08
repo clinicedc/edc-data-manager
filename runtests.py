@@ -28,6 +28,7 @@ DEFAULT_SETTINGS = DefaultTestSettings(
     DATA_MANAGER_ENABLED=True,
     EDC_NAVBAR_VERIFY_ON_LOAD=IGNORE,
     EDC_NAVBAR_DEFAULT=app_name,
+    EDC_AUTH_CODENAMES_WARN_ONLY=True,
     INSTALLED_APPS=[
         "django.contrib.admin",
         "django.contrib.auth",
