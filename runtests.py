@@ -29,6 +29,8 @@ DEFAULT_SETTINGS = DefaultTestSettings(
     EDC_NAVBAR_VERIFY_ON_LOAD=IGNORE,
     EDC_NAVBAR_DEFAULT=app_name,
     EDC_AUTH_CODENAMES_WARN_ONLY=True,
+    EDC_AUTH_SKIP_SITE_AUTHS=True,
+    EDC_AUTH_SKIP_AUTH_UPDATER=True,
     INSTALLED_APPS=[
         "django.contrib.admin",
         "django.contrib.auth",
@@ -39,6 +41,8 @@ DEFAULT_SETTINGS = DefaultTestSettings(
         "django.contrib.sites",
         "django_crypto_fields.apps.AppConfig",
         "django_revision.apps.AppConfig",
+        "django_celery_beat",
+        "django_celery_results",
         "edc_action_item.apps.AppConfig",
         "edc_adverse_event.apps.AppConfig",
         "adverse_event_app.apps.AppConfig",
