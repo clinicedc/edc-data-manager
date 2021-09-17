@@ -74,7 +74,7 @@ Query Rules define criteria to be used to scan the dataset for data problems. In
 * Research staff contact
 * Data manager contact
 
-As mentioned above, a ``Data Query`` can be automatically creayed by a ``Query Rule``. Simple ``Query Rules`` are defined using the ``Query Rule`` form.
+As mentioned above, a ``Data Query`` can be automatically created by a ``Query Rule``. Simple ``Query Rules`` are defined using the ``Query Rule`` form.
 ``Query Rules`` are run by a "handler". The default handler is sufficient in most cases. If not, a custom handler can be written, registered with
 ``edc_data_manager``, and selected on the ``Query Rule`` form.
 
