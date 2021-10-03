@@ -7,9 +7,11 @@ from edc_consent.field_mixins import PersonalFieldsMixin
 from edc_consent.field_mixins.identity_fields_mixin import IdentityFieldsMixin
 from edc_consent.model_mixins import ConsentModelMixin
 from edc_constants.choices import YES_NO
+from edc_crf.crf_with_action_model_mixin import CrfWithActionModelMixin
 from edc_identifier.managers import SubjectIdentifierManager
 from edc_identifier.model_mixins import UniqueSubjectIdentifierFieldMixin
 from edc_lab.model_mixins import RequisitionModelMixin
+from edc_list_data.model_mixins import ListModelMixin
 from edc_metadata.model_mixins.creates import CreatesMetadataModelMixin
 from edc_metadata.model_mixins.updates import UpdatesCrfMetadataModelMixin
 from edc_model.models import BaseUuidModel
@@ -19,7 +21,11 @@ from edc_reference.model_mixins import ReferenceModelMixin
 from edc_registration.model_mixins import UpdatesOrCreatesRegistrationModelMixin
 from edc_sites.models import SiteModelMixin
 from edc_visit_schedule.model_mixins import OffScheduleModelMixin, OnScheduleModelMixin
-from edc_visit_tracking.model_mixins import VisitModelMixin, VisitTrackingCrfModelMixin
+from edc_visit_tracking.model_mixins import (
+    SubjectVisitMissedModelMixin,
+    VisitModelMixin,
+    VisitTrackingCrfModelMixin,
+)
 
 
 class BasicModel(SiteModelMixin, BaseUuidModel):
@@ -105,6 +111,34 @@ class SubjectVisit(
     subject_identifier = models.CharField(max_length=50)
 
     reason = models.CharField(max_length=25)
+
+
+class SubjectVisitMissedReasons(ListModelMixin):
+    class Meta(ListModelMixin.Meta):
+        verbose_name = "Subject Missed Visit Reasons"
+        verbose_name_plural = "Subject Missed Visit Reasons"
+
+
+class SubjectVisitMissed(
+    SubjectVisitMissedModelMixin,
+    CrfWithActionModelMixin,
+    BaseUuidModel,
+):
+
+    action_identifier = models.CharField(max_length=50, null=True)
+
+    tracking_identifier = models.CharField(max_length=30, null=True)
+
+    missed_reasons = models.ManyToManyField(
+        SubjectVisitMissedReasons, blank=True, related_name="+"
+    )
+
+    class Meta(
+        SubjectVisitMissedModelMixin.Meta,
+        BaseUuidModel.Meta,
+    ):
+        verbose_name = "Missed Visit Report"
+        verbose_name_plural = "Missed Visit Report"
 
 
 class SubjectRequisition(RequisitionModelMixin, BaseUuidModel):

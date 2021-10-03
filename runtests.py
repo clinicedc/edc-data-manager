@@ -21,6 +21,7 @@ DEFAULT_SETTINGS = DefaultTestSettings(
     DATA_DICTIONARY_APP_LABELS=["data_manager_app", "edc_offstudy", "edc_registration"],
     SUBJECT_CONSENT_MODEL="data_manager_app.subjectconsent",
     SUBJECT_VISIT_MODEL="data_manager_app.subjectvisit",
+    SUBJECT_VISIT_MISSED_MODEL="data_manager_app.subjectvisitmissed",
     SUBJECT_REQUISITION_MODEL="data_manager_app.subjectrequisition",
     ADVERSE_EVENT_ADMIN_SITE="adverse_event_app_admin",
     ADVERSE_EVENT_APP_LABEL="adverse_event_app",
