@@ -52,7 +52,7 @@ class SubjectListboardView(ListboardView):
 
 class HomeView(EdcViewMixin, NavbarViewMixin, TemplateView):
 
-    template_name = f"data_manager_app/home.html"
+    template_name = "data_manager_app/home.html"
     navbar_name = "data_manager_app"
     navbar_selected_item = "data_manager_app"
 
