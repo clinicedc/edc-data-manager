@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic.base import TemplateView
 from edc_dashboard.view_mixins import EdcViewMixin
-from edc_dashboard.views import ListboardView
+from edc_listboard.views import ListboardView
 from edc_navbar import NavbarViewMixin
 from edc_review_dashboard.views import (
     SubjectReviewListboardView as BaseSubjectReviewListboardView,
