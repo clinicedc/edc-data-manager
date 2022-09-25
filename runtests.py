@@ -23,8 +23,8 @@ DEFAULT_SETTINGS = DefaultTestSettings(
     SUBJECT_VISIT_MODEL="data_manager_app.subjectvisit",
     SUBJECT_VISIT_MISSED_MODEL="data_manager_app.subjectvisitmissed",
     SUBJECT_REQUISITION_MODEL="data_manager_app.subjectrequisition",
-    ADVERSE_EVENT_ADMIN_SITE="adverse_event_app_admin",
-    ADVERSE_EVENT_APP_LABEL="adverse_event_app",
+    ADVERSE_EVENT_ADMIN_SITE="data_manager_app_admin",
+    ADVERSE_EVENT_APP_LABEL="data_manager_app",
     CELERY_ENABLED=False,
     DATA_MANAGER_ENABLED=True,
     EDC_NAVBAR_VERIFY_ON_LOAD=IGNORE,
@@ -45,7 +45,7 @@ DEFAULT_SETTINGS = DefaultTestSettings(
         "edc_appointment.apps.AppConfig",
         "edc_action_item.apps.AppConfig",
         "edc_adverse_event.apps.AppConfig",
-        "adverse_event_app.apps.AppConfig",
+        # "adverse_event_app.apps.AppConfig",
         "edc_consent.apps.AppConfig",
         "edc_crf.apps.AppConfig",
         "edc_dashboard.apps.AppConfig",
@@ -81,6 +81,7 @@ DEFAULT_SETTINGS = DefaultTestSettings(
     add_dashboard_middleware=True,
     use_test_urls=True,
     add_lab_dashboard_middleware=True,
+    excluded_apps=["adverse_event_app.apps.AppConfig"],
 ).settings
 
 
