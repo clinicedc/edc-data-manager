@@ -106,7 +106,9 @@ class SubjectVisit(
     BaseUuidModel,
 ):
 
-    appointment = models.OneToOneField(Appointment, on_delete=PROTECT)
+    appointment = models.OneToOneField(
+        Appointment, on_delete=PROTECT, related_name="dm_appointment"
+    )
 
     subject_identifier = models.CharField(max_length=50)
 
