@@ -79,7 +79,7 @@ class SubjectConsent(
     history = HistoricalRecords()
 
     def natural_key(self):
-        return tuple(self.subject_identifier)
+        return (self.subject_identifier,)  # noqa
 
 
 class SubjectReconsent(
@@ -97,7 +97,7 @@ class SubjectReconsent(
     history = HistoricalRecords()
 
     def natural_key(self):
-        return tuple(self.subject_identifier)
+        return (self.subject_identifier,)  # noqa
 
 
 class SubjectVisit(
