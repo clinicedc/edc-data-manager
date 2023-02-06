@@ -39,7 +39,6 @@ from edc_visit_tracking.model_mixins import (
 
 
 class BasicModel(SiteModelMixin, BaseUuidModel):
-
     f1 = models.CharField(max_length=10)
     f2 = models.CharField(max_length=10)
     f3 = models.CharField(max_length=10, null=True, blank=False)
@@ -50,12 +49,10 @@ class BasicModel(SiteModelMixin, BaseUuidModel):
 
 
 class OnSchedule(SiteModelMixin, OnScheduleModelMixin, BaseUuidModel):
-
     pass
 
 
 class OffSchedule(SiteModelMixin, OffScheduleModelMixin, BaseUuidModel):
-
     pass
 
 
@@ -73,7 +70,6 @@ class SubjectConsent(
     SiteModelMixin,
     BaseUuidModel,
 ):
-
     objects = SubjectIdentifierManager()
 
     history = HistoricalRecords()
@@ -91,7 +87,6 @@ class SubjectReconsent(
     SiteModelMixin,
     BaseUuidModel,
 ):
-
     objects = SubjectIdentifierManager()
 
     history = HistoricalRecords()
@@ -107,7 +102,6 @@ class SubjectVisit(
     SiteModelMixin,
     BaseUuidModel,
 ):
-
     appointment = models.OneToOneField(Appointment, on_delete=PROTECT)
 
     subject_identifier = models.CharField(max_length=50)
@@ -126,7 +120,6 @@ class SubjectVisitMissed(
     CrfWithActionModelMixin,
     BaseUuidModel,
 ):
-
     missed_reasons = models.ManyToManyField(
         SubjectVisitMissedReasons, blank=True, related_name="+"
     )
@@ -140,7 +133,6 @@ class SubjectVisitMissed(
 
 
 class SubjectRequisition(RequisitionModelMixin, BaseUuidModel):
-
     subject_visit = models.ForeignKey(SubjectVisit, on_delete=PROTECT)
 
     requisition_datetime = models.DateTimeField(null=True)
@@ -157,7 +149,6 @@ class BaseCrfModel(
     ReferenceModelMixin,
     models.Model,
 ):
-
     f1 = models.CharField(max_length=50, default=uuid.uuid4)
 
     class Meta:
@@ -165,47 +156,38 @@ class BaseCrfModel(
 
 
 class CrfOne(BaseCrfModel, BaseUuidModel):
-
     f1 = models.CharField(max_length=50, null=True)
 
 
 class CrfTwo(BaseCrfModel, BaseUuidModel):
-
     pass
 
 
 class CrfThree(BaseCrfModel, BaseUuidModel):
-
     pass
 
 
 class CrfFour(BaseCrfModel, BaseUuidModel):
-
     pass
 
 
 class CrfFive(BaseCrfModel, BaseUuidModel):
-
     pass
 
 
 class CrfSix(BaseCrfModel, BaseUuidModel):
-
     pass
 
 
 class CrfSeven(BaseCrfModel, BaseUuidModel):
-
     pass
 
 
 class RedirectModel(BaseUuidModel):
-
     subject_identifier = models.CharField(max_length=25)
 
 
 class RedirectNextModel(BaseUuidModel):
-
     subject_identifier = models.CharField(max_length=25)
 
 
@@ -215,7 +197,6 @@ class AeInitial(AeInitialModelMixin, BaseUuidModel):
 
 
 class AeFollowup(AeFollowupModelMixin, BaseUuidModel):
-
     ae_initial = models.ForeignKey(AeInitial, on_delete=PROTECT)
 
     class Meta(AeFollowupModelMixin.Meta):
@@ -223,7 +204,6 @@ class AeFollowup(AeFollowupModelMixin, BaseUuidModel):
 
 
 class Aesi(AesiModelMixin, BaseUuidModel):
-
     ae_initial = models.ForeignKey(AeInitial, on_delete=PROTECT)
 
     class Meta(AesiModelMixin.Meta):
@@ -231,7 +211,6 @@ class Aesi(AesiModelMixin, BaseUuidModel):
 
 
 class AeSusar(AeSusarModelMixin, BaseUuidModel):
-
     ae_initial = models.ForeignKey(AeInitial, on_delete=PROTECT)
 
     class Meta(AeSusarModelMixin.Meta):
@@ -239,7 +218,6 @@ class AeSusar(AeSusarModelMixin, BaseUuidModel):
 
 
 class AeTmg(AeTmgModelMixin, BaseUuidModel):
-
     ae_initial = models.ForeignKey(AeInitial, on_delete=PROTECT)
 
     class Meta(AeTmgModelMixin.Meta):
