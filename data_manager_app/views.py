@@ -12,7 +12,6 @@ from edc_subject_dashboard.views import SubjectDashboardView as BaseSubjectDashb
 
 
 class SubjectReviewListboardView(BaseSubjectReviewListboardView):
-
     listboard_model = "data_manager_app.subjectvisit"
     navbar_name = "edc_review_dashboard"
     navbar_selected = "review"
@@ -30,7 +29,6 @@ class SubjectReviewListboardView(BaseSubjectReviewListboardView):
 
 
 class SubjectDashboardView(BaseSubjectDashboardView):
-
     consent_model = "data_manager_app.subjectconsent"
     navbar_name = "data_manager_app"
     visit_model = "data_manager_app.subjectvisit"
@@ -40,7 +38,6 @@ class SubjectDashboardView(BaseSubjectDashboardView):
 
 
 class SubjectListboardView(ListboardView):
-
     listboard_model = "data_manager_app.subjectvisit"
     listboard_template = "subject_listboard_template"
     listboard_url = "subject_listboard_url"
@@ -51,7 +48,6 @@ class SubjectListboardView(ListboardView):
 
 
 class HomeView(EdcViewMixin, NavbarViewMixin, TemplateView):
-
     template_name = "data_manager_app/home.html"
     navbar_name = "data_manager_app"
     navbar_selected_item = "data_manager_app"
