@@ -28,15 +28,17 @@ show_missing = true
 skip_covered = true
 omit = ["requirements.txt"]
 exclude_lines = [
-  "pragma: no cover",
-  "if TYPE_CHECKING:",
+    "@abstractmethod",
+    "@abc.abstractmethod",
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
 ]
 
 [tool.tox]
 legacy_tox_ini = """
 [tox]
 envlist =
-    py{310,311}-dj{40,41,dev},
+    py{310,311}-dj{41,dev},
     lint
 
 isolated_build = true
@@ -48,7 +50,6 @@ python =
 
 [gh-actions:env]
 DJANGO =
-    4.0: dj40
     4.1: dj41, lint
     dev: djdev
 
@@ -58,7 +59,6 @@ deps =
     -r https://raw.githubusercontent.com/clinicedc/edc/develop/requirements.tests/test_utils.txt
     -r https://raw.githubusercontent.com/clinicedc/edc/develop/requirements.tests/edc.txt
     -r https://raw.githubusercontent.com/clinicedc/edc/develop/requirements.tests/third_party_dev.txt
-    dj40: Django>=4.0,<4.1
     dj41: Django>=4.1,<4.2
     djdev: https://github.com/django/django/tarball/main
 
