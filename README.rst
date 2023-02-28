@@ -116,47 +116,47 @@ For example:
 
 .. code-block:: python
 
-	# data_manager.py
+    # data_manager.py
 
-	from ambition_subject.constants import AWAITING_RESULTS
-	from edc_constants.constants import NOT_DONE, YES, NO
-	from edc_data_manager.handlers import QueryRuleHandler
-	from edc_data_manager.site_data_manager import site_data_manager
+    from ambition_subject.constants import AWAITING_RESULTS
+    from edc_constants.constants import NOT_DONE, YES, NO
+    from edc_data_manager.handlers import QueryRuleHandler
+    from edc_data_manager.site_data_manager import site_data_manager
 
 
-	class LumbarPunctureHandlerQ13(QueryRuleHandler):
+    class LumbarPunctureHandlerQ13(QueryRuleHandler):
 
-	    name = "lumbar_puncture_q13"
-	    display_name = "Lumbar Puncture (Q13, 15, 21, 23, 24)"
-	    model_name = "ambition_subject.lumbarpuncturecsf"
+        name = "lumbar_puncture_q13"
+        display_name = "Lumbar Puncture (Q13, 15, 21, 23, 24)"
+        model_name = "ambition_subject.lumbarpuncturecsf"
 
-	    @property
-	    def inspect_model(self):
-	        """Lumbar Puncture/Cerebrospinal Fluid 13, 15, 21, 23, 24.
-	        """
-	        valid = False
-	        if self.get_field_value("csf_culture") == AWAITING_RESULTS:
-	            pass
-	        elif self.get_field_value("csf_culture") == NOT_DONE:
-	            valid = True
-	        elif self.get_field_value("csf_culture") == YES:
-	            if (self.get_field_value("other_csf_culture")
-	                    and self.get_field_value("csf_wbc_cell_count")
-	                    and self.get_field_value("csf_glucose")
-	                    and self.get_field_value("csf_protein")
-	                    and (self.get_field_value("csf_cr_ag")
-	                         or self.get_field_value("india_ink"))):
-	                valid = True
-	        elif self.get_field_value("csf_culture") == NO:
-	            if (self.get_field_value("csf_wbc_cell_count")
-	                    and self.get_field_value("csf_glucose")
-	                    and self.get_field_value("csf_protein")
-	                    and (self.get_field_value("csf_cr_ag")
-	                         or self.get_field_value("india_ink"))):
-	                valid = True
-	        return valid
+        @property
+        def inspect_model(self):
+            """Lumbar Puncture/Cerebrospinal Fluid 13, 15, 21, 23, 24.
+            """
+            valid = False
+            if self.get_field_value("csf_culture") == AWAITING_RESULTS:
+                pass
+            elif self.get_field_value("csf_culture") == NOT_DONE:
+                valid = True
+            elif self.get_field_value("csf_culture") == YES:
+                if (self.get_field_value("other_csf_culture")
+                        and self.get_field_value("csf_wbc_cell_count")
+                        and self.get_field_value("csf_glucose")
+                        and self.get_field_value("csf_protein")
+                        and (self.get_field_value("csf_cr_ag")
+                             or self.get_field_value("india_ink"))):
+                    valid = True
+            elif self.get_field_value("csf_culture") == NO:
+                if (self.get_field_value("csf_wbc_cell_count")
+                        and self.get_field_value("csf_glucose")
+                        and self.get_field_value("csf_protein")
+                        and (self.get_field_value("csf_cr_ag")
+                             or self.get_field_value("india_ink"))):
+                    valid = True
+            return valid
 
-	site_data_manager.register(LumbarPunctureHandlerQ13)
+    site_data_manager.register(LumbarPunctureHandlerQ13)
 
 Note the use of ``get_field_value`` method instead of directly accessing the model instance. This is not absolutely necessary but
 avoids confusion by ensuring you only access fields defined in the ``Query Rule``.
@@ -171,41 +171,41 @@ For example:
 
 .. code-block:: python
 
-	# data_manager.py
+    # data_manager.py
 
-	from edc_data_manager.handlers import QueryRuleHandler
-	from edc_data_manager.site_data_manager import site_data_manager
+    from edc_data_manager.handlers import QueryRuleHandler
+    from edc_data_manager.site_data_manager import site_data_manager
 
 
-	class MyCustomHandler(QueryRuleHandler):
+    class MyCustomHandler(QueryRuleHandler):
 
-	    name = "my_custom_handler"
-	    display_name = "My Custom Handler"
-	    model_name = "my_app.somecrf"
+        name = "my_custom_handler"
+        display_name = "My Custom Handler"
+        model_name = "my_app.somecrf"
 
-	    @property
-	    def inspect_model(self):
+        @property
+        def inspect_model(self):
 
-	        valid = False
+            valid = False
 
-	        if self.get_field_value("field_one") == 1:
+            if self.get_field_value("field_one") == 1:
 
-	        ... some more code that eventually sets valid to True
+            ... some more code that eventually sets valid to True
 
-	        return valid
+            return valid
 
-	site_data_manager.register(MyCustomHandler)
+    site_data_manager.register(MyCustomHandler)
 
 Dumping and loading a QueryRule fixture
 ++++++++++++++++++++++++++++++++++++++++++
 
 .. code-block:: bash
 
-	python manage.py dumpdata edc_data_manager.queryrule --natural-foreign --natural-primary --indent 4 -o queryrule.json
+    python manage.py dumpdata edc_data_manager.queryrule --natural-foreign --natural-primary --indent 4 -o queryrule.json
 
 .. code-block:: bash
 
-	python manage.py loaddata queryrules.json
+    python manage.py loaddata queryrules.json
 
 Updating query rules
 ++++++++++++++++++++
@@ -217,7 +217,7 @@ If ``celery`` is enabled, the ``update_query_rules`` will try to send proccessin
 See also ``update_query_rules``, ``update_query_rules_action``.
 
 .. |pypi| image:: https://img.shields.io/pypi/v/edc-data-manager.svg
-    :target: https://pypi.python.org/pypi/edc-data-manager
+  :target: https://pypi.python.org/pypi/edc-data-manager
 
 .. |actions| image:: https://github.com/clinicedc/edc-data-manager/workflows/build/badge.svg?branch=develop
   :target: https://github.com/clinicedc/edc-data-manager/actions?query=workflow:build
