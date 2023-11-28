@@ -216,6 +216,63 @@ If ``celery`` is enabled, the ``update_query_rules`` will try to send proccessin
 
 See also ``update_query_rules``, ``update_query_rules_action``.
 
+Rerun form validation
++++++++++++++++++++++
+
+You can use the ``FormValidationRunner`` to rerun form validation on all instances for a model.
+
+You could do this:
+
+.. code-block:: python
+
+    runner = FormValidationRunner(modelform)
+    runner.run()
+
+
+You could also run for every model in your EDC deployment by getting the ``ModelForm`` class
+from the ``admin`` registry and running ``FormValidationRunner``:
+
+.. code-block:: python
+
+    from django.apps import apps as django_apps
+    from edc_data_manager.form_validation_runners import (
+        FormValidationRunner,
+        FormValidationRunnerError,
+        get_modelform_cls,
+        )
+
+    for app_config in django_apps.get_app_configs():
+        for model_cls in app_config.get_models():
+            try:
+                modelform = get_modelform_cls(model_cls._meta.label_lower)
+            except FormValidationRunnerError as e:
+                print(e)
+            else:
+                runner = FormValidationRunner(modelform)
+                try:
+                    runner.run()
+                except AttributeError as e:
+                    print(f"{e}. See {model_cls._meta.label_lower}.")
+
+You could also create a custom ``FormValidationRunner`` for your model to add extra fields and ignore others.
+
+For example:
+
+.. code-block:: python
+
+    class AppointmentFormValidationRunner(FormValidationRunner):
+        def __init__(self, modelform_cls: ModelForm = None, **kwargs):
+            modelform_cls = modelform_cls or AppointmentForm
+            extra_fieldnames = ["appt_datetime"]
+            ignore_fieldnames = ["appt_close_datetime"]
+            super().__init__(
+                modelform_cls=modelform_cls,
+                extra_formfields=extra_fieldnames,
+                ignore_formfields=ignore_fieldnames,
+                **kwargs,
+            )
+
+
 .. |pypi| image:: https://img.shields.io/pypi/v/edc-data-manager.svg
   :target: https://pypi.python.org/pypi/edc-data-manager
 
