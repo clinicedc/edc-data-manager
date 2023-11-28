@@ -217,7 +217,7 @@ If ``celery`` is enabled, the ``update_query_rules`` will try to send proccessin
 See also ``update_query_rules``, ``update_query_rules_action``.
 
 Rerun form validation
-+++++++++++++++++++++
+=====================
 
 You can use the ``FormValidationRunner`` to rerun form validation on all instances for a model.
 
