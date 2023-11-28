@@ -37,10 +37,10 @@ crfs2 = FormsCollection(Crf(show_order=1, model=f"{app_label}.crfseven", require
 
 
 crfs_unscheduled = FormsCollection(
-    Crf(show_order=1, model=f"{app_label}.crfone", required=True),
-    Crf(show_order=2, model=f"{app_label}.crftwo", required=True),
-    Crf(show_order=3, model=f"{app_label}.crfthree", required=True),
-    Crf(show_order=4, model=f"{app_label}.crffive", required=True),
+    Crf(show_order=10, model=f"{app_label}.crfone", required=True),
+    Crf(show_order=20, model=f"{app_label}.crftwo", required=True),
+    Crf(show_order=30, model=f"{app_label}.crfthree", required=True),
+    Crf(show_order=40, model=f"{app_label}.crffive", required=True),
 )
 
 requisitions = FormsCollection(
@@ -53,9 +53,9 @@ requisitions3000 = FormsCollection(
 )
 
 requisitions_unscheduled = FormsCollection(
-    Requisition(show_order=10, panel=MockPanel("one"), required=True, additional=False),
-    Requisition(show_order=20, panel=MockPanel("three"), required=True, additional=False),
-    Requisition(show_order=30, panel=MockPanel("five"), required=True, additional=False),
+    Requisition(show_order=105, panel=MockPanel("one"), required=True, additional=False),
+    Requisition(show_order=205, panel=MockPanel("three"), required=True, additional=False),
+    Requisition(show_order=305, panel=MockPanel("five"), required=True, additional=False),
 )
 
 visit0 = Visit(
