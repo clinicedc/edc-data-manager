@@ -217,7 +217,7 @@ If ``celery`` is enabled, the ``update_query_rules`` will try to send proccessin
 See also ``update_query_rules``, ``update_query_rules_action``.
 
 Rerun form validation
-+++++++++++++++++++++
+=====================
 
 You can use the ``FormValidationRunner`` to rerun form validation on all instances for a model.
 
@@ -242,17 +242,28 @@ from the ``admin`` registry and running ``FormValidationRunner``:
         )
 
     for app_config in django_apps.get_app_configs():
+        if app_config.name.startswith("edc_"):
+            continue
         for model_cls in app_config.get_models():
+            if model_cls == Appointment:
+                continue
+            print(model_cls._meta.label_lower)
             try:
                 modelform = get_modelform_cls(model_cls._meta.label_lower)
             except FormValidationRunnerError as e:
                 print(e)
             else:
-                runner = FormValidationRunner(modelform)
+                print(modelform)
                 try:
-                    runner.run()
+                    runner = FormValidationRunner(modelform)
                 except AttributeError as e:
                     print(f"{e}. See {model_cls._meta.label_lower}.")
+                else:
+                    try:
+                        runner.run()
+                    except (AttributeError, FieldError) as e:
+                        print(f"{e}. See {model_cls._meta.label_lower}.")
+
 
 You could also create a custom ``FormValidationRunner`` for your model to add extra fields and ignore others.
 
