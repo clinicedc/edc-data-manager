@@ -287,8 +287,8 @@ For example:
 .. |pypi| image:: https://img.shields.io/pypi/v/edc-data-manager.svg
   :target: https://pypi.python.org/pypi/edc-data-manager
 
-.. |actions| image:: https://github.com/clinicedc/edc-data-manager/workflows/build/badge.svg?branch=develop
-  :target: https://github.com/clinicedc/edc-data-manager/actions?query=workflow:build
+.. |actions| image:: https://github.com/clinicedc/edc-data-manager/actions/workflows/build.yml/badge.svg
+  :target: https://github.com/clinicedc/edc-data-manager/actions/workflows/build.yml
 
 .. |codecov| image:: https://codecov.io/gh/clinicedc/edc-data-manager/branch/develop/graph/badge.svg
   :target: https://codecov.io/gh/clinicedc/edc-data-manager
