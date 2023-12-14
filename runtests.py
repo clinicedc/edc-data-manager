@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import logging
-import os
 from pathlib import Path
 
 from edc_constants.constants import IGNORE
@@ -13,7 +12,7 @@ project_settings = DefaultTestSettings(
     calling_file=__file__,
     APP_NAME=app_name,
     BASE_DIR=base_dir,
-    ETC_DIR=os.path.join(base_dir, app_name, "tests", "etc"),
+    ETC_DIR=str(base_dir / app_name / "tests" / "etc"),
     DATA_DICTIONARY_APP_LABELS=["data_manager_app", "edc_offstudy", "edc_registration"],
     SUBJECT_CONSENT_MODEL="data_manager_app.subjectconsent",
     SUBJECT_VISIT_MODEL="data_manager_app.subjectvisit",
