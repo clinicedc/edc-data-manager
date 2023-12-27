@@ -1,3 +1,5 @@
+from typing import Any
+
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -52,14 +54,13 @@ class HomeView(EdcViewMixin, NavbarViewMixin, TemplateView):
     navbar_name = "data_manager_app"
     navbar_selected_item = "data_manager_app"
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update(
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        kwargs.update(
             edc_packages=["not available"],
             third_party_packages=["not available"],
             installed_apps=settings.INSTALLED_APPS,
         )
-        return context
+        return super().get_context_data(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
