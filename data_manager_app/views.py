@@ -31,7 +31,6 @@ class SubjectReviewListboardView(BaseSubjectReviewListboardView):
 
 
 class SubjectDashboardView(BaseSubjectDashboardView):
-    consent_model = "data_manager_app.subjectconsent"
     navbar_name = "data_manager_app"
     visit_model = "data_manager_app.subjectvisit"
 
