@@ -4,8 +4,8 @@ from edc_review_dashboard.navbars import navbar as review_navbar
 
 navbar = Navbar(name="data_manager_app")
 
-for item in review_navbar.items:
-    navbar.append_item(item)
+for navbar_item in review_navbar.navbar_items:
+    navbar.register(navbar_item)
 
 
 site_navbars.register(navbar)
