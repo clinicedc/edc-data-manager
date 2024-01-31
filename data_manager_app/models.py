@@ -10,7 +10,6 @@ from edc_adverse_event.model_mixins import (
     AeTmgModelMixin,
     DeathReportModelMixin,
     DeathReportTmgModelMixin,
-    DeathReportTmgSecondModelMixin,
 )
 from edc_appointment.models import Appointment
 from edc_consent.field_mixins import PersonalFieldsMixin
@@ -231,6 +230,6 @@ class DeathReportTmg(DeathReportTmgModelMixin, BaseUuidModel):
         pass
 
 
-class DeathReportTmgSecond(DeathReportTmgSecondModelMixin, BaseUuidModel):
-    class Meta(DeathReportTmgSecondModelMixin.Meta):
+class DeathReportTmgSecond(DeathReportTmgModelMixin, BaseUuidModel):
+    class Meta(DeathReportTmgModelMixin.Meta):
         pass
