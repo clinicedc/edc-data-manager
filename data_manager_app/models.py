@@ -76,6 +76,11 @@ class SubjectConsent(
         return (self.subject_identifier,)  # noqa
 
 
+class SubjectConsentV1(SubjectConsent):
+    class Meta:
+        proxy = True
+
+
 class SubjectReconsent(
     ConsentModelMixin,
     PersonalFieldsMixin,
