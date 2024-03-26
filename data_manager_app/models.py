@@ -14,6 +14,7 @@ from edc_adverse_event.model_mixins import (
 from edc_appointment.models import Appointment
 from edc_consent.field_mixins import PersonalFieldsMixin
 from edc_consent.field_mixins.identity_fields_mixin import IdentityFieldsMixin
+from edc_consent.managers import ConsentObjectsByCdefManager, CurrentSiteByCdefManager
 from edc_consent.model_mixins import ConsentModelMixin
 from edc_constants.choices import YES_NO
 from edc_crf.model_mixins import CrfWithActionModelMixin
@@ -77,6 +78,9 @@ class SubjectConsent(
 
 
 class SubjectConsentV1(SubjectConsent):
+    objects = ConsentObjectsByCdefManager()
+    on_site = CurrentSiteByCdefManager()
+
     class Meta:
         proxy = True
 
