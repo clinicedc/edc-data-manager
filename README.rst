@@ -295,4 +295,3 @@ For example:
 
 .. |downloads| image:: https://pepy.tech/badge/edc-data-manager
    :target: https://pepy.tech/project/edc-data-manager
-
