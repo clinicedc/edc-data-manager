@@ -2,15 +2,6 @@ import uuid
 
 from django.db import models
 from django.db.models.deletion import PROTECT
-from edc_adverse_event.model_mixins import (
-    AeFollowupModelMixin,
-    AeInitialModelMixin,
-    AesiModelMixin,
-    AeSusarModelMixin,
-    AeTmgModelMixin,
-    DeathReportModelMixin,
-    DeathReportTmgModelMixin,
-)
 from edc_appointment.models import Appointment
 from edc_consent.field_mixins import PersonalFieldsMixin
 from edc_consent.field_mixins.identity_fields_mixin import IdentityFieldsMixin
@@ -194,51 +185,3 @@ class RedirectModel(BaseUuidModel):
 
 class RedirectNextModel(BaseUuidModel):
     subject_identifier = models.CharField(max_length=25)
-
-
-class AeInitial(AeInitialModelMixin, BaseUuidModel):
-    class Meta(AeInitialModelMixin.Meta):
-        pass
-
-
-class AeFollowup(AeFollowupModelMixin, BaseUuidModel):
-    ae_initial = models.ForeignKey(AeInitial, on_delete=PROTECT)
-
-    class Meta(AeFollowupModelMixin.Meta):
-        pass
-
-
-class Aesi(AesiModelMixin, BaseUuidModel):
-    ae_initial = models.ForeignKey(AeInitial, on_delete=PROTECT)
-
-    class Meta(AesiModelMixin.Meta):
-        pass
-
-
-class AeSusar(AeSusarModelMixin, BaseUuidModel):
-    ae_initial = models.ForeignKey(AeInitial, on_delete=PROTECT)
-
-    class Meta(AeSusarModelMixin.Meta):
-        pass
-
-
-class AeTmg(AeTmgModelMixin, BaseUuidModel):
-    ae_initial = models.ForeignKey(AeInitial, on_delete=PROTECT)
-
-    class Meta(AeTmgModelMixin.Meta):
-        pass
-
-
-class DeathReport(DeathReportModelMixin, BaseUuidModel):
-    class Meta(DeathReportModelMixin.Meta):
-        pass
-
-
-class DeathReportTmg(DeathReportTmgModelMixin, BaseUuidModel):
-    class Meta(DeathReportTmgModelMixin.Meta):
-        pass
-
-
-class DeathReportTmgSecond(DeathReportTmgModelMixin, BaseUuidModel):
-    class Meta(DeathReportTmgModelMixin.Meta):
-        pass
