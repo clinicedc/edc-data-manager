@@ -17,6 +17,7 @@ project_settings = DefaultTestSettings(
         "edc_navbar.E002",
         "edc_navbar.E003",
     ],
+    EDC_DATA_MANAGER_POPULATE_DATA_DICTIONARY=True,
     EDC_AUTH_CODENAMES_WARN_ONLY=True,
     EDC_AUTH_SKIP_SITE_AUTHS=True,
     EDC_AUTH_SKIP_AUTH_UPDATER=True,
